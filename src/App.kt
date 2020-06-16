@@ -1,5 +1,6 @@
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 /**
  *
@@ -64,5 +65,19 @@ class Codec() {
         root.left = makeTree(res)
         root.right = makeTree(res)
         return root
+    }
+}
+
+class Solution {
+
+    // 1014. 最佳观光组合
+    fun maxScoreSightseeingPair(A: IntArray): Int {
+        var left = A[0]
+        var max = Int.MIN_VALUE
+        for (i in 1 until A.size) {
+            max = max.coerceAtLeast(left + A[i] - i)
+            left = left.coerceAtLeast(A[i] + i)
+        }
+        return max
     }
 }
