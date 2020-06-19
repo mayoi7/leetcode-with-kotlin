@@ -29,9 +29,12 @@ fun main() {
     println(obj.serialize(newRoot))*/
 
     val solution = Solution()
-    val str = "1-52--3--4-5--6--7"
-    val root = solution.recoverFromPreorder(str)
-    println(root?.`val`)
+
+//    val str = "1-52--3--4-5--6--7"
+//    val root = solution.recoverFromPreorder(str)
+//    println(root?.`val`)
+
+    solution.isPalindrome("A man, a plan, a canal: Panama")
 }
 
 class Codec {
@@ -149,5 +152,26 @@ class Solution {
             lastDeep = nums[i]
         }
         return root
+    }
+
+    // 125. 验证回文串
+    fun isPalindrome(s: String): Boolean {
+        var p = 0
+        var q = s.length - 1
+
+        while (p < q) {
+            if (!s[p].isLetterOrDigit()) {
+                p++
+                continue
+            }
+            if (!s[q].isLetterOrDigit()) {
+                q--
+                continue
+            }
+            if (s[p++].toLowerCase() != s[q--].toLowerCase()) {
+                return false
+            }
+        }
+        return true
     }
 }
