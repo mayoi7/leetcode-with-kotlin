@@ -1,6 +1,7 @@
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.math.min
 
 /**
  *
@@ -13,30 +14,6 @@ import kotlin.collections.HashMap
  * 297. 二叉树的序列化与反序列化
  * https://leetcode-cn.com/problems/serialize-and-deserialize-binary-tree/
  */
-fun main() {
-/*    val obj = Codec()
-
-    val root = TreeNode(1)
-    root.left = TreeNode(2)
-    root.left?.left = TreeNode(3)
-    root.right = TreeNode(4)
-    root.right?.right = TreeNode(5)
-
-    val serialize = obj.serialize(root)
-    println(serialize)
-
-    val newRoot = obj.deserialize(serialize)
-    println(obj.serialize(newRoot))*/
-
-    val solution = Solution()
-
-//    val str = "1-52--3--4-5--6--7"
-//    val root = solution.recoverFromPreorder(str)
-//    println(root?.`val`)
-
-    solution.isPalindrome("A man, a plan, a canal: Panama")
-}
-
 class Codec {
 
     private val DELIMITER = "-"
@@ -174,4 +151,29 @@ class Solution {
         }
         return true
     }
+
+    // 299. 猜数字游戏
+    fun getHint(secret: String, guess: String): String {
+        val nums = IntArray(10)
+        val wrongs = IntArray(10)
+        var bulls = 0
+        var cows = 0
+        for (i in guess.indices) {
+            if (secret[i] == guess[i]) {
+                bulls++
+            } else {
+                nums[secret[i] - '0']++
+                wrongs[guess[i] - '0']++
+            }
+        }
+        for (i in nums.indices) {
+            cows += min(nums[i], wrongs[i])
+        }
+        return "${bulls}A${cows}B"
+    }
+}
+
+fun main() {
+    val solution = Solution()
+    solution.getHint("1123", "0111")
 }
