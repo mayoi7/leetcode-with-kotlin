@@ -1,6 +1,7 @@
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.math.max
 import kotlin.math.min
 
 /**
@@ -171,9 +172,29 @@ class Solution {
         }
         return "${bulls}A${cows}B"
     }
+
+    var pathMax = Int.MIN_VALUE
+
+    fun maxPathSum(root: TreeNode?): Int {
+        if (root == null) {
+            return 0
+        }
+        findMax(root)
+        return pathMax
+    }
+
+    fun findMax(root: TreeNode?): Int {
+        return if (root == null) {
+            0
+        } else {
+            val left = max(0, findMax(root.left))
+            val right = max(0, findMax(root.right))
+            pathMax = max(pathMax, left + right + root.`val`)
+            max(left, right) + root.`val`
+        }
+    }
 }
 
 fun main() {
     val solution = Solution()
-    solution.getHint("1123", "0111")
 }
