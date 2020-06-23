@@ -193,8 +193,66 @@ class Solution {
             max(left, right) + root.`val`
         }
     }
+
+    fun addBinary(a: String, b: String): String {
+        if (a == "") {
+            return b
+        } else if (b == "") {
+            return a
+        }
+        val mLen = max(a.length, b.length)
+        val res = IntArray(mLen + 1)
+        var i = 0
+        var c = 0
+        var na: Int;
+        var nb: Int;
+        while (i < a.length && i < b.length) {
+            na = a[a.length - i - 1] - '0'
+            nb = b[b.length - i - 1] - '0'
+            res[mLen - i] = na + nb + c
+            c = 0
+            if (res[mLen - i] == 2) {
+                c = 1
+                res[mLen - i] = 0
+            } else if (res[mLen - i] == 3) {
+                c = 1
+                res[mLen - i] = 1
+            }
+            i++
+        }
+        while (i < a.length) {
+            res[mLen - i] = a[a.length - i - 1] - '0' + c
+            c = 0
+            if (res[mLen - i] > 1) {
+                c = 1
+                res[mLen - i] = 0
+            }
+            i++
+        }
+        while (i < b.length) {
+            res[mLen - i] = b[b.length - i - 1] - '0' + c
+            c = 0
+            if (res[mLen - i] > 1) {
+                c = 1
+                res[mLen - i] = 0
+            }
+            i++
+        }
+        var start = 0
+        if (c > 0) {
+            res[0] = c
+        } else {
+            start = 1
+        }
+        var ans = ""
+        for (k in start until mLen + 1) {
+            ans += res[k]
+        }
+        return ans
+    }
 }
 
 fun main() {
     val solution = Solution()
+    println(solution.addBinary("110", "110010"))
 }
