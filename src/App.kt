@@ -1,6 +1,7 @@
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.collections.HashSet
 import kotlin.math.max
 import kotlin.math.min
 
@@ -250,9 +251,28 @@ class Solution {
         }
         return ans
     }
+
+    fun removeDuplicateNodes(head: ListNode?): ListNode? {
+        if (head?.next == null) {
+            return head
+        }
+        val set = HashSet<Int>()
+        var node = head.next
+        var preNode = head
+        set.add(preNode.`val`)
+        while(node != null) {
+            if (set.contains(node.`val`)) {
+                preNode?.next = node.next
+            } else {
+                set.add(node.`val`)
+                preNode = preNode?.next
+            }
+            node = node?.next
+        }
+        return head
+    }
 }
 
 fun main() {
     val solution = Solution()
-    println(solution.addBinary("110", "110010"))
 }
