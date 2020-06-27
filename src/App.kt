@@ -271,8 +271,37 @@ class Solution {
         }
         return head
     }
+
+    fun firstMissingPositive(nums: IntArray): Int {
+        val len = nums.size
+        var i = 0
+        while (i < len) {
+            while (nums[i] in 1..len && nums[i] != nums[nums[i] - 1]) {
+                val si = i
+                val sj = nums[i] - 1
+                val k = nums[si]
+                nums[si] = nums[sj]
+                nums[sj] = k
+            }
+            i++
+        }
+        i = 0
+        while (i < len) {
+            if (nums[i] != i + 1) {
+                return i + 1
+            }
+            i++
+        }
+        return len + 1
+    }
 }
 
 fun main() {
     val solution = Solution()
+    val nums = IntArray(4)
+    nums[0] = 3
+    nums[1] = 4
+    nums[2] = -1
+    nums[3] = -1
+    solution.firstMissingPositive(nums)
 }
